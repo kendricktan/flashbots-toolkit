@@ -1,6 +1,9 @@
 // eslint-disable-next-line
 require("dotenv").config();
 
+// eslint-disable-next-line
+require('log-timestamp');
+
 import { FlashbotsBundleProvider } from "@flashbots/ethers-provider-bundle";
 import { formatUnits, parseUnits } from "ethers/lib/utils";
 import { TOKENS } from "./constants";
