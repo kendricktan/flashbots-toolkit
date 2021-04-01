@@ -1,5 +1,5 @@
 import { ERC20 } from "../typechain/ERC20";
-import ERC20Abi from "../abi/ERC20.json";
+import ERC20Abi from "../abi/ERC20";
 import { ethers, Wallet } from "ethers";
 import { FlashbotsBundleTransaction } from "@flashbots/ethers-provider-bundle";
 

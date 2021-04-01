@@ -1,5 +1,5 @@
 import { FlashbotsCheckAndSend } from "../typechain/FlashbotsCheckAndSend";
-import FlashbotsCheckAndSendABI from "../abi/FlashbotsCheckAndSend.json";
+import FlashbotsCheckAndSendABI from "../abi/FlashbotsCheckAndSend";
 import { FlashbotsBundleTransaction } from "@flashbots/ethers-provider-bundle";
 import { BigNumberish, ethers, Wallet } from "ethers";
 import { ERC20Contract } from "./ERC20";

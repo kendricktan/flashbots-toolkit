@@ -1,7 +1,7 @@
 import { LiquidityProtection } from "../typechain/LiquidityProtection";
 import { LiquidityProtectionStore } from "../typechain/LiquidityProtectionStore";
-import LiquidityProtectionAbi from "../abi/LiquidityProtection.json";
-import LiquidityProtectionStoreAbi from "../abi/LiquidityProtectionStore.json";
+import LiquidityProtectionAbi from "../abi/LiquidityProtection";
+import LiquidityProtectionStoreAbi from "../abi/LiquidityProtectionStore";
 import { BigNumberish, ethers, Wallet } from "ethers";
 import { FlashbotsBundleTransaction } from "@flashbots/ethers-provider-bundle";
 import { CONTRACTS } from "../constants";
