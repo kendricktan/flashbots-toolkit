@@ -12,7 +12,7 @@ export const makeStakingRewardsExit = async (
   sender: Wallet,
   stakingRewardAddress: string
 ): Promise<FlashbotsBundleTransaction> => {
-  const rawTx = StakingRewardsContract.attch(
+  const rawTx = StakingRewardsContract.attach(
     stakingRewardAddress
   ).populateTransaction.exit();
 

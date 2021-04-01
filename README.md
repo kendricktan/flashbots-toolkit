@@ -1,14 +1,18 @@
-# flashbots-legos
-Toolkit for flashbots searcher tx
+# flashbots-toolkit
+Toolkit to quickly create flashbot compatiable scripts
 
-Make sure you have nodejs installed.
+## Engines
 
-Make a `.env` file, referencing `.env.example`.
+- Bancor
+    - LiquidityProtection
+    - LiquidityProtectionStore
+- StakingRewards
+- Masterchef
+- ERC20
+
+
+## Development
 
 ```
 yarn
-
-yarn ts-node src/part1.ts
-# wait 24 hours
-yarn ts-node src/part2.ts
 ```
