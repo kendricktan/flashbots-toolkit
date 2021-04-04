@@ -7,21 +7,23 @@ require("log-timestamp");
 import { getAccounts } from "./utils";
 import { Wallet } from "ethers";
 import { formatEther } from "ethers/lib/utils";
-import { gasPriceToGwei } from "./utils";
+import { ask, gasPriceToGwei } from "./utils";
 
 const { compromised, provider } = getAccounts();
 
 async function burn(wallet: Wallet) {
   const balance = await wallet.getBalance();
+  const blockNumber = await wallet.provider.getBlockNumber();
+
   if (balance.isZero()) {
-    console.log(` Balance is zero`);
+    console.log(`${blockNumber} - Balance is zero`);
     return;
   }
 
   const gasPrice = balance.div(21000).sub(1);
   if (gasPrice.lt(1e9)) {
     console.log(
-      ` Balance too low to burn (balance=${formatEther(
+      `${blockNumber} - Balance too low to burn (balance=${formatEther(
         balance
       )} gasPrice=${gasPriceToGwei(gasPrice)})`
     );
@@ -36,21 +38,35 @@ async function burn(wallet: Wallet) {
       gasPrice,
     });
     console.log(
-      ` Sent tx with nonce ${tx.nonce} burning ${formatEther(
+      `${blockNumber} - Sent tx with nonce ${tx.nonce} burning ${formatEther(
         balance
       )} ETH at gas price ${gasPriceToGwei(gasPrice)} gwei: ${tx.hash}`
     );
   } catch (err) {
-    console.log(` Error sending tx: ${err.message ?? err}`);
+    console.log(`${blockNumber} - Error sending tx: ${err.message ?? err}`);
   }
 }
 
 const main = async () => {
   console.log(`Connected to ${provider.connection.url}`);
-  provider.on("block", async (blockNumber) => {
-    console.log(`New block ${blockNumber}`);
-    await burn(compromised);
-  });
+  console.log(
+    `Compromised account (provided liquidity on Bancor): ${compromised.address}`
+  );
+  console.log("=========");
+  let confirmProceed = await ask("Continue? (y/n): ");
+  while (
+    confirmProceed === "" ||
+    (confirmProceed !== "y" && confirmProceed !== "n")
+  ) {
+    confirmProceed = await ask("Continue? (y/n): ");
+  }
+
+  if (confirmProceed !== "y") {
+    return;
+  }
+
+  console.log(`Starting burner for account ${compromised.address}`);
+  setInterval(() => burn(compromised), 2500);
 };
 
 main();

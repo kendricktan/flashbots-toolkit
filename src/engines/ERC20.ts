@@ -22,7 +22,7 @@ export const makeTransferAllERC20 = async (
     );
   }
 
-  const rawTx = token.populateTransaction.transfer(recipient, balance);
+  const rawTx = await token.populateTransaction.transfer(recipient, balance);
 
   return {
     transaction: {

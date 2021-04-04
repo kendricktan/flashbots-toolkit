@@ -46,6 +46,7 @@ const main = async () => {
     compromised.address,
     TOKENS.VBNT.address
   );
+
   const removeLiquidityTx = await makeProtectionRemoveAllLiquidity(
     compromised,
     PROTECTION_ID
