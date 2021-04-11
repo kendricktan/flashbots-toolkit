@@ -1,6 +1,6 @@
 import { ERC20 } from "../typechain/ERC20";
 import ERC20Abi from "../abi/ERC20";
-import { ethers, Wallet } from "ethers";
+import { BigNumber, ethers, Wallet } from "ethers";
 import { FlashbotsBundleTransaction } from "@flashbots/ethers-provider-bundle";
 
 export const ERC20Contract = new ethers.Contract(
@@ -13,7 +13,7 @@ export const makeTransferAllERC20 = async (
   recipient: string,
   erc20Address: string
 ): Promise<FlashbotsBundleTransaction> => {
-  const token = ERC20Contract.attach(erc20Address).connect(sender);
+  const token = await ERC20Contract.attach(erc20Address).connect(sender);
   const balance = await token.balanceOf(sender.address);
 
   if (balance.eq(ethers.BigNumber.from(0))) {
@@ -33,3 +33,23 @@ export const makeTransferAllERC20 = async (
     signer: sender,
   };
 };
+
+export const makeTransferAllERC20Amount = async (
+  sender: Wallet,
+  recipient: string,
+  erc20Address: string,
+  amount: BigNumber
+): Promise<FlashbotsBundleTransaction> => {
+  const token = await ERC20Contract.attach(erc20Address);
+  const rawTx = await token.populateTransaction.transfer(recipient, amount);
+
+  return {
+    transaction: {
+      ...rawTx,
+      gasPrice: 0,
+      gasLimit: 400000,
+    },
+    signer: sender,
+  };
+};
+
