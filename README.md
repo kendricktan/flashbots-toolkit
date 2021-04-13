@@ -1,18 +1,8 @@
 # flashbots-toolkit
-Toolkit to quickly create flashbot compatiable scripts
+Flashbots toolkit to quickly test your flashbots.
 
-## Engines
-
-- Bancor
-    - LiquidityProtection
-    - LiquidityProtectionStore
-- StakingRewards
-- Masterchef
-- ERC20
-
-
-## Development
+# Test
 
 ```
-yarn
+yarn test
 ```

@@ -2,4 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { ERC20 } from "./ERC20";
-export type { LiquidityProtection } from "./LiquidityProtection";
+export type { MasterChef } from "./MasterChef";
+export type { StakingRewards } from "./StakingRewards";
+export type { IUniswapV2Router02 } from "./IUniswapV2Router02";
+export type { IWETH } from "./IWETH";
+export type { FlashbotsCheckAndSend } from "./FlashbotsCheckAndSend";

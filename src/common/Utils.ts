@@ -1,13 +1,32 @@
+// eslint-disable-next-line
+require("dotenv").config();
+
+// eslint-disable-next-line
+require("log-timestamp");
+
 import {
   FlashbotsBundleProvider,
   FlashbotsBundleResolution,
   FlashbotsBundleTransaction,
 } from "@flashbots/ethers-provider-bundle";
-import { BigNumber, ethers, Wallet } from "ethers";
+import { BigNumber, ethers, PopulatedTransaction, Wallet } from "ethers";
 import readline from "readline";
 
 export const ETHER = BigNumber.from(10).pow(18);
 export const GWEI = BigNumber.from(10).pow(9);
+
+export function createFlashbotsTx(
+  signer: Wallet,
+  tx: PopulatedTransaction
+): FlashbotsBundleTransaction {
+  return {
+    transaction: {
+      ...tx,
+      gasPrice: 0,
+    },
+    signer,
+  };
+}
 
 export async function checkSimulation(
   flashbotsProvider: FlashbotsBundleProvider,
@@ -100,8 +119,8 @@ export function getAccounts(): {
     valid = false;
   }
 
-  if (!process.env.DONOR_PRIVATE_KEY) {
-    console.error("DONOR_PRIVATE_KEY missing");
+  if (!process.env.BRIBER_PRIVATE_KEY) {
+    console.error("BRIBER_PRIVATE_KEY missing");
     valid = false;
   }
 
@@ -111,13 +130,13 @@ export function getAccounts(): {
 
   const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
 
-  if (process.env.DONOR_PRIVATE_KEY && process.env.COMPROMISED_PRIVATE_KEY) {
+  if (process.env.BRIBER_PRIVATE_KEY && process.env.COMPROMISED_PRIVATE_KEY) {
     return {
       compromised: new ethers.Wallet(
         process.env.COMPROMISED_PRIVATE_KEY,
         provider
       ),
-      briber: new ethers.Wallet(process.env.DONOR_PRIVATE_KEY, provider),
+      briber: new ethers.Wallet(process.env.BRIBER_PRIVATE_KEY, provider),
       auth: ethers.Wallet.createRandom(provider),
       provider,
     };

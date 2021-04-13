@@ -1,13 +1,7 @@
-// eslint-disable-next-line
-require("dotenv").config();
-
-// eslint-disable-next-line
-require("log-timestamp");
-
-import { getAccounts } from "./utils";
+import { getAccounts } from "./common/Utils";
 import { Wallet } from "ethers";
 import { formatEther } from "ethers/lib/utils";
-import { ask, gasPriceToGwei } from "./utils";
+import { ask, gasPriceToGwei } from "./common/Utils";
 
 const { compromised, provider } = getAccounts();
 
@@ -66,7 +60,7 @@ const main = async () => {
   }
 
   console.log(`Starting burner for account ${compromised.address}`);
-  setInterval(() => burn(compromised), 2500);
+  setInterval(() => burn(compromised), 2000);
 };
 
 main();
